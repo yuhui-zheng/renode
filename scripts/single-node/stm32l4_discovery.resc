@@ -20,8 +20,6 @@ $id2 = `python "print rand.getrandbits(32)"`
 $id3 = `python "print rand.getrandbits(32)"`
 macro reset
 """
-    sysbus LoadELF $bin
-
     sysbus WriteDoubleWord 0x1FFF7A10 $id1
     sysbus WriteDoubleWord 0x1FFF7A14 $id2
     sysbus WriteDoubleWord 0x1FFF7A18 $id3
