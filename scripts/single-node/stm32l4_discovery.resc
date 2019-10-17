@@ -5,8 +5,11 @@ using sysbus
 $name?="STM32L4_Discovery"
 mach create $name
 machine LoadPlatformDescription @platforms/boards/stm32l4_discovery-kit.repl
+machine StartGdbServer 3333
 
 cpu PerformanceInMips 125
+
+$bin?=@https://freertos-binary-images.s3.amazonaws.com/aws_demos_stm32l475.elf?AWSAccessKeyId=ASIAYWNLVE3GLQXC5CXV&Expires=1571200466&x-amz-security-token=AgoJb3JpZ2luX2VjEFMaCXVzLWVhc3QtMSJHMEUCIQC1GfCE0bp9QBGa2VtHDjduFAkV0Nljj7tdOdpKAJDNkwIgB2VQpZBSrCDdFZMzG4F9aMGaMnY21wrfKSOQ6A6OR%2B8qmQIITBABGgw1OTc4OTczMjQyMzYiDN6%2Fx2cejOMGQJkESCr2Ad%2Fen6ELAUsXifIO1PIjVdP9TKtCThs5gESF3Cp9H3IHCSnzx2J8a%2F4atDXGyhDgUL%2BSjxZNGZYSMrx8pxOU5kvMy8EXMyfhD5BSVYEZkWKuWxc8Bl2UPqoK50PgXdUY4nuDfkxxx9huFO3t%2BMn%2BDS4a8ZVhGInR3IR0j3OHKbn13Gdkj8KF5KtcKNjAORnZoHF8vY1k5gjOD56gQfLQZjcrcRCqY3IkTYotVXp%2FR1sH9Z7oWsjgaR%2BAEy5mc2WrFtz9wH4%2FMLLwWbNO4xdzn%2ByFMMwbQWNEwEBRmsMfcwYS2KNGzQSQudSI0%2F%2BfoOFgYJIEAD6gJDDKo5jtBTq0AaXvV2WpO1Pjex9eEQV6C2DDJJgJ8Gy9eXkrMsITrAKMUlnkVrwMNb48j7l9%2FyL81LFMAuAsKvqVgc8gwJIImMOKBX1AWcBlYaYNSxgjDNfr8jrLdgrLDkc7EG7QyySTW8kY2MogB0NlZLQjXCEcupx3Y8zxKYmYAxxNz7w5o%2BSMrVX9Yhri3CYPLCJOqfOGXh33rx0bOMfNnDdIeENWUJBoiEJAVHYj79cqeMGZyzim18YbKg%3D%3D&Signature=mHb7%2F3lCzXlx%2BcGtf7fG5OWc3tM%3D
 
 showAnalyzer sysbus.uart4
 
@@ -20,6 +23,7 @@ $id2 = `python "print rand.getrandbits(32)"`
 $id3 = `python "print rand.getrandbits(32)"`
 macro reset
 """
+    sysbus LoadELF $bin
     sysbus WriteDoubleWord 0x1FFF7A10 $id1
     sysbus WriteDoubleWord 0x1FFF7A14 $id2
     sysbus WriteDoubleWord 0x1FFF7A18 $id3
